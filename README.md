@@ -82,24 +82,13 @@ Follow these steps to get the project running on your machine.
 
 ---
 
-## 🧪 Testing & Simulation
+## 🧪 Simulation
 
 ### Manual Simulation
-The project includes a Python simulation script to test the system under load:
-```bash
-# Install dependencies
-pip install -r simulations/requirements.txt
 
 # Run simulation
 python3 simulations/simulate_webhooks.py
 ```
-
-### Automated Tests
-To run the professional test suite (Unit & Feature tests):
-```bash
-docker compose exec app php artisan test
-```
-
 ---
 
 ## 📂 Project Structure
