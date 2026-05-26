@@ -89,6 +89,13 @@ Follow these steps to get the project running on your machine.
 # Run simulation
 python3 simulations/simulate_webhooks.py
 ```
+
+### Automated Tests
+To run the professional test suite (Unit & Feature tests):
+```bash
+docker compose exec app php artisan test
+```
+
 ---
 
 ## 📂 Project Structure
