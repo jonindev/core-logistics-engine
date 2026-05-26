@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: cle-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - cle-network
+
+  web:
+    image: nginx:alpine
+    container_name: cle-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - cle-network
+    depends_on:
+      - app
+
+  db:
+    image: postgres:15-alpine
+    container_name: cle-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-laravel}
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - cle-network
+
+  redis:
+    image: redis:alpine
+    container_name: cle-redis
+    restart: unless-stopped
+    networks:
+      - cle-network
+
+networks:
+  cle-network:
+    driver: bridge
+
+volumes:
+  pgdata:
